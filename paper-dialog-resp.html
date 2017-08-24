@@ -1,0 +1,95 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-dialog/paper-dialog.html">
+<!--
+`paper-dialog-resp`
+
+
+@demo demo/index.html
+-->
+
+<dom-module id="paper-dialog-resp">
+  <template>
+    <style>
+      :host {
+        display: block;
+
+
+      }
+
+      paper-dialog {
+        background: white !important;
+        box-shadow: 0px 0px 0px 0px !important;
+        width: 400px;
+      }
+
+      paper-dialog.centerfullscreen {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        right: inherit;
+        bottom: inherit;
+        padding: inherit;
+        margin: inherit;
+        max-height: initial !important;
+        max-width: initial !important;
+        box-shadow: none;
+      }
+
+      @media only screen and (min-width: 768px) {
+        /**Desktop**/
+        paper-dialog.centerfullscreen {
+          padding-top: auto;
+          /*  background-color: transparent;*/
+          box-shadow: none;
+        }
+      }
+
+      @media only screen and (max-width: 768px) {
+        paper-dialog {
+          height: 100% !important;
+          width: 100% !important;
+        }
+      }
+
+
+    </style>
+
+
+    <paper-dialog id="papDialog" class="centerfullscreen" modal="{{modal}}"  with-backdrop="{{withBackdrop}}" on-iron-overlay-canceled="_onClose">
+        <slot></slot>
+    </paper-dialog>
+
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'paper-dialog-resp',
+
+      properties: {
+        modal: {
+          type: Boolean,
+          notify: true,
+          value: false
+        },
+        withBackdrop: {
+          type: Boolean,
+          notify: true,
+          value: false
+        }
+
+      },
+      _onClose: function() {
+        this.fire("close");
+      },
+
+      open: function() {
+        this.$.papDialog.open();
+      },
+      close: function() {
+        this.$.papDialog.close();
+      }
+    });
+  </script>
+</dom-module>
